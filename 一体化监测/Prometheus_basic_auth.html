@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Prometheus配置基本授权-账号密码登录 | Ailife&#39;s Wiki</title>
+    
+    
+        <meta name="keywords" content="Prometheus,basic auth">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="安装好Prometheus后发现我们打开地址便可访问无安全性，此时我们想到官方指南中的basic_auth。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prometheus配置基本授权-账号密码登录">
+<meta property="og:url" content="https://wiki.ailife.cc/%E4%B8%80%E4%BD%93%E5%8C%96%E7%9B%91%E6%B5%8B/Prometheus_basic_auth.html">
+<meta property="og:site_name" content="Ailife&#39;s Wiki">
+<meta property="og:description" content="安装好Prometheus后发现我们打开地址便可访问无安全性，此时我们想到官方指南中的basic_auth。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-09-30T00:31:26.057Z">
+<meta property="article:modified_time" content="2025-09-30T00:31:26.057Z">
+<meta property="article:author" content="Jeremy Peng">
+<meta property="article:tag" content="Prometheus">
+<meta property="article:tag" content="basic auth">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Ailife&#39;s Wiki" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Ailife&#39;s Wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="https://gxxc.wiki/" rel="external nofollow noopener noreferrer" target="_blank">XC知识库</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="https://gxxc.wiki/" rel="external nofollow noopener noreferrer" target="_blank">XC知识库</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            01-麒麟系统
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            01-服务器系统
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/01-%E9%BA%92%E9%BA%9F%E7%B3%BB%E7%BB%9F/01-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B3%BB%E7%BB%9F/%E9%BA%92%E9%BA%9F%E6%9C%8D%E5%8A%A1%E5%99%A8V10%E7%B3%BB%E7%BB%9F%E6%BF%80%E6%B4%BB.html">麒麟服务器V10系统激活</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            一体化监测
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file active"><a href="/%E4%B8%80%E4%BD%93%E5%8C%96%E7%9B%91%E6%B5%8B/Prometheus_basic_auth.html">Prometheus配置基本授权-账号密码登录</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            生活学习
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/%E7%94%9F%E6%B4%BB%E5%AD%A6%E4%B9%A0/%E9%A9%AC%E6%96%AF%E6%B4%9B%E9%9C%80%E6%B1%82%E5%B1%82%E6%AC%A1%E7%90%86%E8%AE%BA.html">马斯洛需求层次理论</a></li>  <li class="file"><a href="/%E7%94%9F%E6%B4%BB%E5%AD%A6%E4%B9%A0/DISC-%E8%A1%8C%E4%B8%BA%E9%A3%8E%E6%A0%BC%E7%90%86%E8%AE%BA.html">DISC 行为风格理论</a></li>  <li class="file"><a href="/%E7%94%9F%E6%B4%BB%E5%AD%A6%E4%B9%A0/%E7%82%B9%E6%BB%B4%E4%BA%BA%E7%94%9F%E8%A7%82%E5%BF%B5%E4%BF%A1%E6%9D%A1.html">点滴人生观念信条</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            艺术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            平面设计
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/%E8%89%BA%E6%9C%AF/%E5%B9%B3%E9%9D%A2%E8%AE%BE%E8%AE%A1/%E5%B9%B3%E9%9D%A2%E8%AE%BE%E8%AE%A1%E5%85%A5%E9%97%A8%E5%AF%BC%E5%9B%BE.html">平面设计入门导图</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     <li class="file"><a href="/index.html">Welcome Ailife's Wiki Site</a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-一体化监测/Prometheus_basic_auth" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E4%B8%80%E4%BD%93%E5%8C%96%E7%9B%91%E6%B5%8B/">一体化监测</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Prometheus/" rel="tag">Prometheus</a>, <a class="tag-link-link" href="/tags/basic-auth/" rel="tag">basic auth</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/%E4%B8%80%E4%BD%93%E5%8C%96%E7%9B%91%E6%B5%8B/Prometheus_basic_auth.html">
+            <time datetime="2025-09-30T00:31:26.057Z" itemprop="datePublished">2025-09-30</time>
+        </a>
+    </div>
+
+
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Prometheus配置基本授权-账号密码登录
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prometheus%E9%85%8D%E7%BD%AE%E5%9F%BA%E6%9C%AC%E6%8E%88%E6%9D%83"><span class="toc-number">1.</span> <span class="toc-text">Prometheus配置基本授权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">生成密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAweb-yml"><span class="toc-number">1.2.</span> <span class="toc-text">创建web.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8-Prometheus"><span class="toc-number">1.3.</span> <span class="toc-text">启动 Prometheus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.</span> <span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node-exporter%E5%9F%BA%E6%9C%AC%E6%8E%88%E6%9D%83"><span class="toc-number">2.</span> <span class="toc-text">Node_exporter基本授权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-exporter-%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text">Node_exporter 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">修改配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Prometheus-%E9%85%8D%E7%BD%AE"><span class="toc-number">2.3.</span> <span class="toc-text">Prometheus 配置</span></a></li></ol></li></ol>
+                </div>
+            
+        
+        
+            <p>安装好Prometheus后发现我们打开地址便可访问无安全性，此时我们想到官方指南中的basic_auth。</p>
+<p>参考指南：<a href="https://prometheus.io/docs/guides/basic-auth/" rel="external nofollow noopener noreferrer" target="_blank">Securing Prometheus API and UI endpoints using basic auth | Prometheus</a></p>
+<h2 id="Prometheus配置基本授权"><a href="#Prometheus配置基本授权" class="headerlink" title="Prometheus配置基本授权"></a>Prometheus配置基本授权</h2><p>假设您希望要求访问 Prometheus 实例的所有用户提供用户名和密码。对于此示例，请用作用户名并选择您想要的任何密码。</p>
+<h3 id="生成密码"><a href="#生成密码" class="headerlink" title="生成密码"></a>生成密码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ htpasswd -nBC 12 <span class="string">&#x27;&#x27;</span> | <span class="built_in">tr</span> -d <span class="string">&#x27;:\n&#x27;</span>   </span><br><span class="line">New password: </span><br><span class="line">Re-<span class="built_in">type</span> new password:</span><br><span class="line">$2b$12<span class="variable">$hNf2lSsxfm0</span>.i4a.1kVpSOVyBCfIB51VRjgBUyv6kdnyTlgWj81Ay</span><br></pre></td></tr></table></figure>
+
+<p>在此示例中，我使用“test”作为密码。</p>
+<p>将该密码保存在某个地方，我们将在接下来的步骤中使用它！</p>
+<h3 id="创建web-yml"><a href="#创建web-yml" class="headerlink" title="创建web.yml"></a>创建web.yml</h3><p>让我们创建一个web.yml文件， 内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">basic_auth_users:</span><br><span class="line">    admin: $2b$12<span class="variable">$hNf2lSsxfm0</span>.i4a.1kVpSOVyBCfIB51VRjgBUyv6kdnyTlgWj81Ay</span><br></pre></td></tr></table></figure>
+
+<p>您可以使用以下命令验证该文件 <code>promtool check web-config web.yml</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ promtool check web-config web.yml</span><br><span class="line">web.yml SUCCESS</span><br></pre></td></tr></table></figure>
+
+<p>您可以向文件添加多个用户。</p>
+<h3 id="启动-Prometheus"><a href="#启动-Prometheus" class="headerlink" title="启动 Prometheus"></a>启动 Prometheus</h3><p>您可以使用 Web 配置文件启动 prometheus，如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ prometheus --web.config.file=web.yml</span><br></pre></td></tr></table></figure>
+
+<p>修改启动配置文件，添加参数 <code>--web.config.file=web.yml</code> 如systemctl文件所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ vim prometheus.yml</span><br><span class="line">[Unit]</span><br><span class="line">Description=<span class="string">&quot;prometheus&quot;</span></span><br><span class="line">Documentation=https://prometheus.io/</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/opt/prometheus/prometheus  \</span><br><span class="line">      --config.file=/opt/prometheus/prometheus.yml \</span><br><span class="line">      --web.config.file=/opt/prometheus/web.yml \</span><br><span class="line">      --storage.tsdb.path=/opt/data \</span><br><span class="line">      --storage.tsdb.retention.time=90d \</span><br><span class="line">      --web.enable-lifecycle --enable-feature=remote-write-receiver \</span><br><span class="line">      --query.lookback-delta=2m </span><br><span class="line">Restart=on-failure</span><br><span class="line">SuccessExitStatus=0</span><br><span class="line">LimitNOFILE=65536</span><br><span class="line">StandardOutput=syslog</span><br><span class="line">StandardError=syslog</span><br><span class="line">SyslogIdentifier=prometheus</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>您可以使用 cURL 与您的设置进行交互。尝试以下请求：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --<span class="built_in">head</span> http://localhost:9090/graph</span><br></pre></td></tr></table></figure>
+
+<p>这将返回响应，因为您未能提供有效的用户名和密码。401 Unauthorized</p>
+<p>要使用基本身份验证（例如端点）成功访问 Prometheus 端点，请使用标志提供正确的用户名，并在出现提示时提供密码：<code>/metrics -u</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -u admin http://localhost:9090/metrics</span><br><span class="line">Enter host password <span class="keyword">for</span> user <span class="string">&#x27;admin&#x27;</span>:</span><br></pre></td></tr></table></figure>
+
+<p>这应该返回 Prometheus 指标输出，它应该如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># HELP go_gc_duration_seconds A summary of the GC invocation durations.</span></span><br><span class="line"><span class="comment"># TYPE go_gc_duration_seconds summary</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">&quot;0&quot;</span>&#125; 0.0001343</span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">&quot;0.25&quot;</span>&#125; 0.0002032</span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">&quot;0.5&quot;</span>&#125; 0.0004485</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Node-exporter基本授权"><a href="#Node-exporter基本授权" class="headerlink" title="Node_exporter基本授权"></a>Node_exporter基本授权</h2><p>因安全需要，现在对 node_exporter 进行配置以支持 TLS 和 Basic Auth。</p>
+<blockquote>
+<p>Node_exporter 1.0 以上版本才支持 TLS 和 Basic Auth</p>
+</blockquote>
+<h3 id="Node-exporter-配置"><a href="#Node-exporter-配置" class="headerlink" title="Node_exporter 配置"></a>Node_exporter 配置</h3><p><strong>准备工作</strong></p>
+<p><a href="https://github.com/prometheus/node_exporter" rel="external nofollow noopener noreferrer" target="_blank">prometheus&#x2F;node_exporter</a></p>
+<p>下载安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/prometheus/node_exporter/releases/download/v1.9.1/node_exporter-1.9.1.linux-amd64.tar.gz</span><br><span class="line">$ tar xf node_exporter-1.9.1.linux-amd64.tar.gz</span><br><span class="line">$ <span class="built_in">mv</span> node_exporter-1.9.1.linux-amd64 /usr/local/node_exporter</span><br></pre></td></tr></table></figure>
+
+<p><strong>生成TLS证书</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout node_exporter.key -out node_exporter.crt -subj <span class="string">&quot;/C=CN/ST=Beijing/L=Beijing/O=Moelove.info/CN=localhost&quot;</span></span><br><span class="line">Generating a RSA private key</span><br><span class="line">...................+++++</span><br><span class="line">.........................................................................................................................................................................................................................................................................+++++</span><br><span class="line">writing new private key to <span class="string">&#x27;node_exporter.key&#x27;</span></span><br><span class="line">-----</span><br><span class="line"></span><br><span class="line">$ ll</span><br><span class="line">total 16</span><br><span class="line">drwxr-xr-x  2 root root 4096 Dec  1 14:58 ./</span><br><span class="line">drwx------ 27 root root 4096 Dec  1 14:58 ../</span><br><span class="line">-rw-r--r--  1 root root 1310 Dec  1 14:58 node_exporter.crt</span><br><span class="line">-rw-------  1 root root 1704 Dec  1 14:58 node_exporter.key</span><br></pre></td></tr></table></figure>
+
+<p>通过上面的步骤，我们得到了 node_exporter.crt 和node_exporter.key 这两个文件。</p>
+<p><strong>basic auth 认证生成</strong></p>
+<p>安装 htpasswd 来生成密码 hash</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ apt install apache2-utils -y           <span class="comment">#Ubuntu</span></span><br><span class="line"></span><br><span class="line">$ yum install httpd-tools -y             <span class="comment">#centos</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Node_exporter 目录下执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ htpasswd -nBC 12 <span class="string">&#x27;&#x27;</span> | <span class="built_in">tr</span> -d <span class="string">&#x27;:\n&#x27;</span>   </span><br><span class="line">New password: </span><br><span class="line">Re-<span class="built_in">type</span> new password:</span><br><span class="line">$2b$12<span class="variable">$hNf2lSsxfm0</span>.i4a.1kVpSOVyBCfIB51VRjgBUyv6kdnyTlgWj81Ay</span><br></pre></td></tr></table></figure>
+
+<p>在此示例中，我使用“test”作为密码。</p>
+<h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>将前面生成的 node_exporter.crt 和node_exporter.key 文件复制到 Node_exporter 解压目录下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cp</span> /usr/local/node_exporter/node_exporter.* .</span><br><span class="line">$ ll</span><br><span class="line">total 19352</span><br><span class="line">drwxr-xr-x 2 root root     4096 Dec  1 15:12 ./</span><br><span class="line">drwxr-xr-x 5 root root     4096 Dec  1 15:07 ../</span><br><span class="line">-rw-r--r-- 1 3434 3434    11357 Nov 30 03:05 LICENSE</span><br><span class="line">-rw-r--r-- 1 3434 3434      463 Nov 30 03:05 NOTICE</span><br><span class="line">-rwxr-xr-x 1 3434 3434 19779640 Nov 30 02:59 node_exporter*</span><br><span class="line">-rw-r--r-- 1 root root     1310 Dec  1 15:12 node_exporter.crt</span><br><span class="line">-rw------- 1 root root     1704 Dec  1 15:12 node_exporter.key</span><br></pre></td></tr></table></figure>
+
+<p>编写配置文件，并保存为 <code>config.yaml</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tls_server_config:</span><br><span class="line">  cert_file: node_exporter.crt</span><br><span class="line">  key_file: node_exporter.key</span><br><span class="line">basic_auth_users:</span><br><span class="line">  <span class="comment"># 当前设置的用户名为 root ， 可以设置多个</span></span><br><span class="line">  root: $2b$12<span class="variable">$hNf2lSsxfm0</span>.i4a.1kVpSOVyBCfIB51VRjgBUyv6kdnyTlgWj81Ay</span><br></pre></td></tr></table></figure>
+
+<p>启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> ./node_exporter --web.listen-address=:9100 --web.config.file=config.yaml &amp;</span><br></pre></td></tr></table></figure>
+
+<p><strong>验证</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:39100/metrics </span><br><span class="line">Client sent an HTTP request to an HTTPS server.</span><br><span class="line">root@zabbix:/opt/node_exporter# curl https://localhost:39100/metrics </span><br><span class="line">curl: (60) SSL certificate problem: self signed certificate</span><br><span class="line">More details here: https://curl.haxx.se/docs/sslcerts.html</span><br><span class="line"></span><br><span class="line">curl failed to verify the legitimacy of the server and therefore could not</span><br><span class="line">establish a secure connection to it. To learn more about this situation and</span><br><span class="line">how to fix it, please visit the web page mentioned above.</span><br></pre></td></tr></table></figure>
+
+<p>可以看到不能直接访问了，下面带上证书及用户密码再次测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ curl -u prometheus -s  --cacert node_exporter.crt https://localhost:39100/metrics |grep node_exporter_build_info</span><br><span class="line">Enter host password <span class="keyword">for</span> user <span class="string">&#x27;prometheus&#x27;</span>:</span><br><span class="line"><span class="comment"># HELP node_exporter_build_info A metric with a constant &#x27;1&#x27; value labeled by version, revision, branch, and goversion from which node_exporter was built.</span></span><br><span class="line"><span class="comment"># TYPE node_exporter_build_info gauge</span></span><br><span class="line">node_exporter_build_info&#123;branch=<span class="string">&quot;HEAD&quot;</span>,goversion=<span class="string">&quot;go1.19.3&quot;</span>,revision=<span class="string">&quot;1b48970ffcf5630534fb00bb0687d73c66d1c959&quot;</span>,version=<span class="string">&quot;1.5.0&quot;</span>&#125; 1</span><br></pre></td></tr></table></figure>
+
+<h3 id="Prometheus-配置"><a href="#Prometheus-配置" class="headerlink" title="Prometheus 配置"></a>Prometheus 配置</h3><p>下载最新版解压，并将前面生成的 node_exporter.crt 和node_exporter.key 文件复制到该目录下。在 prometheus.yml 加入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     15s </span><br><span class="line">  evaluation_interval: 15s </span><br><span class="line"></span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: <span class="string">&#x27;prometheus&#x27;</span></span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [<span class="string">&#x27;localhost:9090&#x27;</span>]</span><br><span class="line"></span><br><span class="line">  - job_name: <span class="string">&#x27;node_exporter&#x27;</span></span><br><span class="line">    scheme: https</span><br><span class="line">    tls_config:</span><br><span class="line">      ca_file: node_exporter.crt</span><br><span class="line">      insecure_skip_verify: <span class="literal">true</span></span><br><span class="line">    basic_auth:</span><br><span class="line">      username: root</span><br><span class="line">      password: <span class="built_in">test</span></span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [<span class="string">&#x27;localhost:9100&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>启动 Prometheus 即可。</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+    
+        <a href="/01-%E9%BA%92%E9%BA%9F%E7%B3%BB%E7%BB%9F/01-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B3%BB%E7%BB%9F/%E9%BA%92%E9%BA%9F%E6%9C%8D%E5%8A%A1%E5%99%A8V10%E7%B3%BB%E7%BB%9F%E6%BF%80%E6%B4%BB.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">麒麟服务器V10系统激活</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Jeremy Peng &copy; 2025 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten" rel="external nofollow noopener noreferrer" target="_blank">wikitten</a>
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
