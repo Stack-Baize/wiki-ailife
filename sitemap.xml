@@ -38,6 +38,15 @@
   </url>
   
   <url>
+    <loc>https://wiki.ailife.cc/about/index.html</loc>
+    
+    <lastmod>2025-09-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://wiki.ailife.cc/categories/index.html</loc>
     
     <lastmod>2025-09-21</lastmod>
@@ -48,15 +57,6 @@
   
   <url>
     <loc>https://wiki.ailife.cc/tags/index.html</loc>
-    
-    <lastmod>2025-09-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://wiki.ailife.cc/about/index.html</loc>
     
     <lastmod>2025-09-21</lastmod>
     
