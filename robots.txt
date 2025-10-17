@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /docs/
+Allow: /help/
+Disallow: /assets/
+Disallow: /img/
+Disallow: /hashmap.json
+Disallow: /vp-icons.css
+Disallow: /404.html
