@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Runtime API Examples | Ailife's Wiki</title>
+    <meta name="description" content="Ailife 的 Wiki 站点，记录运维工作中零散的知识点与实践经验。">
+    <meta name="generator" content="VitePress v1.6.4">
+    <link rel="preload stylesheet" href="/assets/style.Bq8Xs700.css" as="style">
+    <link rel="preload stylesheet" href="/vp-icons.css" as="style">
+    
+    <script type="module" src="/assets/app.CZPO-cXr.js"></script>
+    <link rel="preload" href="/assets/inter-roman-latin.Di8DUHzh.woff2" as="font" type="font/woff2" crossorigin="">
+    <link rel="modulepreload" href="/assets/chunks/theme.BeLgP9Ic.js">
+    <link rel="modulepreload" href="/assets/chunks/framework.B-XtCDNB.js">
+    <link rel="modulepreload" href="/assets/help_index.md.rb-fguHK.lean.js">
+    <script id="check-dark-mode">(()=>{const e=localStorage.getItem("vitepress-theme-appearance")||"auto",a=window.matchMedia("(prefers-color-scheme: dark)").matches;(!e||e==="auto"?a:e==="dark")&&document.documentElement.classList.add("dark")})();</script>
+    <script id="check-mac-os">document.documentElement.classList.toggle("mac",/Mac|iPhone|iPod|iPad/i.test(navigator.platform));</script>
+  </head>
+  <body>
+    <div id="app"><div class="Layout" data-v-a5f1d9e5><!--[--><!--]--><!--[--><span tabindex="-1" data-v-5191ab99></span><a href="#VPContent" class="VPSkipLink visually-hidden" data-v-5191ab99>Skip to content</a><!--]--><!----><header class="VPNav" data-v-a5f1d9e5 data-v-cde81741><div class="VPNavBar" data-v-cde81741 data-v-025fb921><div class="wrapper" data-v-025fb921><div class="container" data-v-025fb921><div class="title" data-v-025fb921><div class="VPNavBarTitle has-sidebar" data-v-025fb921 data-v-dc3f0743><a class="title" href="/" data-v-dc3f0743><!--[--><!--]--><!--[--><img class="VPImage logo" src="/logo.png" alt data-v-81e0c09c><!--]--><span data-v-dc3f0743>Ailife&#39;s Wiki</span><!--[--><!--]--></a></div></div><div class="content" data-v-025fb921><div class="content-body" data-v-025fb921><!--[--><!--]--><div class="VPNavBarSearch search" data-v-025fb921><!--[--><!----><div id="local-search"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search"><span class="DocSearch-Button-Container"><span class="vp-icon DocSearch-Search-Icon"></span><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"><kbd class="DocSearch-Button-Key"></kbd><kbd class="DocSearch-Button-Key">K</kbd></span></button></div><!--]--></div><nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu" data-v-025fb921 data-v-8f0e3a14><span id="main-nav-aria-label" class="visually-hidden" data-v-8f0e3a14> Main Navigation </span><!--[--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/docs/" tabindex="0" data-v-8f0e3a14 data-v-0a838675><!--[--><span data-v-0a838675>运维指南</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink active" href="/help/" tabindex="0" data-v-8f0e3a14 data-v-0a838675><!--[--><span data-v-0a838675>帮助中心</span><!--]--></a><!--]--><!--[--><div class="VPFlyout VPNavBarMenuGroup" data-v-8f0e3a14 data-v-02c88b25><button type="button" class="button" aria-haspopup="true" aria-expanded="false" data-v-02c88b25><span class="text" data-v-02c88b25><!----><span data-v-02c88b25>友情链接</span><span class="vpi-chevron-down text-icon" data-v-02c88b25></span></span></button><div class="menu" data-v-02c88b25><div class="VPMenu" data-v-02c88b25 data-v-fcefc9ad><div class="items" data-v-fcefc9ad><!--[--><!--[--><div class="VPMenuLink" data-v-fcefc9ad data-v-3cd4b670><a class="VPLink link vp-external-link-icon" href="https://nav.aisk.cc/" target="_blank" rel="noreferrer" data-v-3cd4b670><!--[--><span data-v-3cd4b670>网址导航</span><!--]--></a></div><!--]--><!--[--><div class="VPMenuLink" data-v-fcefc9ad data-v-3cd4b670><a class="VPLink link vp-external-link-icon" href="https://aisk.cc/" target="_blank" rel="noreferrer" data-v-3cd4b670><!--[--><span data-v-3cd4b670>攀岩之鹿</span><!--]--></a></div><!--]--><!--[--><div class="VPMenuLink" data-v-fcefc9ad data-v-3cd4b670><a class="VPLink link vp-external-link-icon" href="https://gxxc.wiki/" target="_blank" rel="noreferrer" data-v-3cd4b670><!--[--><span data-v-3cd4b670>XC知识库</span><!--]--></a></div><!--]--><!--[--><div class="VPMenuLink" data-v-fcefc9ad data-v-3cd4b670><a class="VPLink link vp-external-link-icon" href="https://www.cnblogs.com/aistack/" target="_blank" rel="noreferrer" data-v-3cd4b670><!--[--><span data-v-3cd4b670>Jeremy Blog</span><!--]--></a></div><!--]--><!--]--></div><!--[--><!--]--></div></div></div><!--]--><!--]--></nav><!----><div class="VPNavBarAppearance appearance" data-v-025fb921 data-v-77fc63ea><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="false" data-v-77fc63ea data-v-e2ea8948 data-v-1e9552e3><span class="check" data-v-1e9552e3><span class="icon" data-v-1e9552e3><!--[--><span class="vpi-sun sun" data-v-e2ea8948></span><span class="vpi-moon moon" data-v-e2ea8948></span><!--]--></span></span></button></div><div class="VPSocialLinks VPNavBarSocialLinks social-links" data-v-025fb921 data-v-ab4f1593 data-v-3e15ec37><!--[--><a class="VPSocialLink no-icon" href="https://github.com/Stack-Baize" aria-label="github" target="_blank" rel="noopener" data-v-3e15ec37 data-v-dffcea60><span class="vpi-social-github"></span></a><!--]--></div><div class="VPFlyout VPNavBarExtra extra" data-v-025fb921 data-v-47fe1614 data-v-02c88b25><button type="button" class="button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation" data-v-02c88b25><span class="vpi-more-horizontal icon" data-v-02c88b25></span></button><div class="menu" data-v-02c88b25><div class="VPMenu" data-v-02c88b25 data-v-fcefc9ad><!----><!--[--><!--[--><!----><div class="group" data-v-47fe1614><div class="item appearance" data-v-47fe1614><p class="label" data-v-47fe1614>主题</p><div class="appearance-action" data-v-47fe1614><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="false" data-v-47fe1614 data-v-e2ea8948 data-v-1e9552e3><span class="check" data-v-1e9552e3><span class="icon" data-v-1e9552e3><!--[--><span class="vpi-sun sun" data-v-e2ea8948></span><span class="vpi-moon moon" data-v-e2ea8948></span><!--]--></span></span></button></div></div></div><div class="group" data-v-47fe1614><div class="item social-links" data-v-47fe1614><div class="VPSocialLinks social-links-list" data-v-47fe1614 data-v-3e15ec37><!--[--><a class="VPSocialLink no-icon" href="https://github.com/Stack-Baize" aria-label="github" target="_blank" rel="noopener" data-v-3e15ec37 data-v-dffcea60><span class="vpi-social-github"></span></a><!--]--></div></div></div><!--]--><!--]--></div></div></div><!--[--><!--]--><button type="button" class="VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen" data-v-025fb921 data-v-fa7fc249><span class="container" data-v-fa7fc249><span class="top" data-v-fa7fc249></span><span class="middle" data-v-fa7fc249></span><span class="bottom" data-v-fa7fc249></span></span></button></div></div></div></div><div class="divider" data-v-025fb921><div class="divider-line" data-v-025fb921></div></div></div><!----></header><div class="VPLocalNav has-sidebar empty" data-v-a5f1d9e5 data-v-3483bfca><div class="container" data-v-3483bfca><button class="menu" aria-expanded="false" aria-controls="VPSidebarNav" data-v-3483bfca><span class="vpi-align-left menu-icon" data-v-3483bfca></span><span class="menu-text" data-v-3483bfca>菜单</span></button><div class="VPLocalNavOutlineDropdown" style="--vp-vh:0px;" data-v-3483bfca data-v-8846f3f0><button data-v-8846f3f0>回到顶部</button><!----></div></div></div><aside class="VPSidebar" data-v-a5f1d9e5 data-v-ff61146e><div class="curtain" data-v-ff61146e></div><nav class="nav" id="VPSidebarNav" aria-labelledby="sidebar-aria-label" tabindex="-1" data-v-ff61146e><span class="visually-hidden" id="sidebar-aria-label" data-v-ff61146e> Sidebar Navigation </span><!--[--><!--]--><!--[--><div class="no-transition group" data-v-488c59bb><section class="VPSidebarItem level-0 collapsible has-active" data-v-488c59bb data-v-1aa46152><div class="item" role="button" tabindex="0" data-v-1aa46152><div class="indicator" data-v-1aa46152></div><h2 class="text" data-v-1aa46152>帮助中心</h2><div class="caret" role="button" aria-label="toggle section" tabindex="0" data-v-1aa46152><span class="vpi-chevron-right caret-icon" data-v-1aa46152></span></div></div><div class="items" data-v-1aa46152><!--[--><div class="VPSidebarItem level-1 is-link" data-v-1aa46152 data-v-1aa46152><div class="item" data-v-1aa46152><div class="indicator" data-v-1aa46152></div><a class="VPLink link link" href="/help/" data-v-1aa46152><!--[--><p class="text" data-v-1aa46152>运维帮助</p><!--]--></a><!----></div><!----></div><div class="VPSidebarItem level-1 is-link" data-v-1aa46152 data-v-1aa46152><div class="item" data-v-1aa46152><div class="indicator" data-v-1aa46152></div><a class="VPLink link link" href="/help/docs.html" data-v-1aa46152><!--[--><p class="text" data-v-1aa46152>运维帮助2</p><!--]--></a><!----></div><!----></div><!--]--></div></section></div><!--]--><!--[--><!--]--></nav></aside><div class="VPContent has-sidebar" id="VPContent" data-v-a5f1d9e5 data-v-90ea82b2><div class="VPDoc has-sidebar has-aside" data-v-90ea82b2 data-v-a832f546><!--[--><!--]--><div class="container" data-v-a832f546><div class="aside" data-v-a832f546><div class="aside-curtain" data-v-a832f546></div><div class="aside-container" data-v-a832f546><div class="aside-content" data-v-a832f546><div class="VPDocAside" data-v-a832f546 data-v-46f328c9><!--[--><!--]--><!--[--><!--]--><nav aria-labelledby="doc-outline-aria-label" class="VPDocAsideOutline" data-v-46f328c9 data-v-0cdc51d3><div class="content" data-v-0cdc51d3><div class="outline-marker" data-v-0cdc51d3></div><div aria-level="2" class="outline-title" id="doc-outline-aria-label" role="heading" data-v-0cdc51d3>页面导航</div><ul class="VPDocOutlineItem root" data-v-0cdc51d3 data-v-6a7db7c0><!--[--><!--]--></ul></div></nav><!--[--><!--]--><div class="spacer" data-v-46f328c9></div><!--[--><!--]--><!----><!--[--><!--]--><!--[--><!--]--></div></div></div></div><div class="content" data-v-a832f546><div class="content-container" data-v-a832f546><!--[--><!--]--><main class="main" data-v-a832f546><div style="position:relative;" class="vp-doc _help_" data-v-a832f546><div><h1 id="runtime-api-examples" tabindex="-1">Runtime API Examples <a class="header-anchor" href="#runtime-api-examples" aria-label="Permalink to &quot;Runtime API Examples&quot;">​</a></h1><p>This page demonstrates usage of some of the runtime APIs provided by VitePress.</p><p>The main <code>useData()</code> API can be used to access site, theme, and page data for the current page. It works in both <code>.md</code> and <code>.vue</code> files:</p><div class="language-md vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">md</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;script setup&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">import { useData } from &#39;vitepress&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">const { theme, page, frontmatter } = useData()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;/script&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Results</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Theme Data</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ theme }}&lt;/pre&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Page Data</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ page }}&lt;/pre&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Page Frontmatter</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ frontmatter }}&lt;/pre&gt;</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h2 id="results" tabindex="-1">Results <a class="header-anchor" href="#results" aria-label="Permalink to &quot;Results&quot;">​</a></h2><h3 id="theme-data" tabindex="-1">Theme Data <a class="header-anchor" href="#theme-data" aria-label="Permalink to &quot;Theme Data&quot;">​</a></h3><pre>{
+  &quot;head&quot;: [
+    [
+      &quot;link&quot;,
+      {
+        &quot;rel&quot;: &quot;icon&quot;,
+        &quot;href&quot;: &quot;/favicon.ico&quot;
+      }
+    ]
+  ],
+  &quot;logo&quot;: &quot;/logo.png&quot;,
+  &quot;search&quot;: {
+    &quot;provider&quot;: &quot;local&quot;
+  },
+  &quot;outline&quot;: {
+    &quot;level&quot;: [
+      2,
+      4
+    ],
+    &quot;label&quot;: &quot;页面导航&quot;
+  },
+  &quot;lastUpdated&quot;: {
+    &quot;text&quot;: &quot;最后更新&quot;,
+    &quot;formatOptions&quot;: {
+      &quot;dateStyle&quot;: &quot;short&quot;,
+      &quot;timeStyle&quot;: &quot;short&quot;
+    }
+  },
+  &quot;docFooter&quot;: {
+    &quot;prev&quot;: &quot;上一页&quot;,
+    &quot;next&quot;: &quot;下一页&quot;
+  },
+  &quot;langMenuLabel&quot;: &quot;多语言&quot;,
+  &quot;returnToTopLabel&quot;: &quot;回到顶部&quot;,
+  &quot;sidebarMenuLabel&quot;: &quot;菜单&quot;,
+  &quot;darkModeSwitchLabel&quot;: &quot;主题&quot;,
+  &quot;lightModeSwitchTitle&quot;: &quot;切换到浅色模式&quot;,
+  &quot;darkModeSwitchTitle&quot;: &quot;切换到深色模式&quot;,
+  &quot;outlineTitle&quot;: &quot;目录&quot;,
+  &quot;nav&quot;: [
+    {
+      &quot;text&quot;: &quot;运维指南&quot;,
+      &quot;link&quot;: &quot;/docs/&quot;
+    },
+    {
+      &quot;text&quot;: &quot;帮助中心&quot;,
+      &quot;link&quot;: &quot;/help/&quot;
+    },
+    {
+      &quot;text&quot;: &quot;友情链接&quot;,
+      &quot;items&quot;: [
+        {
+          &quot;text&quot;: &quot;网址导航&quot;,
+          &quot;link&quot;: &quot;https://nav.aisk.cc/&quot;
+        },
+        {
+          &quot;text&quot;: &quot;攀岩之鹿&quot;,
+          &quot;link&quot;: &quot;https://aisk.cc/&quot;
+        },
+        {
+          &quot;text&quot;: &quot;XC知识库&quot;,
+          &quot;link&quot;: &quot;https://gxxc.wiki/&quot;
+        },
+        {
+          &quot;text&quot;: &quot;Jeremy Blog&quot;,
+          &quot;link&quot;: &quot;https://www.cnblogs.com/aistack/&quot;
+        }
+      ]
+    }
+  ],
+  &quot;sidebar&quot;: {
+    &quot;/docs/&quot;: [
+      {
+        &quot;text&quot;: &quot;运维手册&quot;,
+        &quot;collapsed&quot;: false,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;运维指南&quot;,
+            &quot;link&quot;: &quot;/docs/&quot;
+          },
+          {
+            &quot;text&quot;: &quot;基础篇2&quot;,
+            &quot;link&quot;: &quot;/docs/linux&quot;
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;麒麟系统&quot;,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;麒麟系统激活&quot;,
+            &quot;link&quot;: &quot;/docs/kylin/kylin-activation&quot;
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;一体化监测&quot;,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;Prom基本授权&quot;,
+            &quot;link&quot;: &quot;docs/monitoring/Prometheus_basic_auth&quot;
+          }
+        ]
+      }
+    ],
+    &quot;/help/&quot;: [
+      {
+        &quot;text&quot;: &quot;帮助中心&quot;,
+        &quot;collapsed&quot;: false,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;运维帮助&quot;,
+            &quot;link&quot;: &quot;/help/&quot;
+          },
+          {
+            &quot;text&quot;: &quot;运维帮助2&quot;,
+            &quot;link&quot;: &quot;/help/docs&quot;
+          }
+        ]
+      }
+    ]
+  },
+  &quot;socialLinks&quot;: [
+    {
+      &quot;icon&quot;: &quot;github&quot;,
+      &quot;link&quot;: &quot;https://github.com/Stack-Baize&quot;
+    }
+  ],
+  &quot;footer&quot;: {
+    &quot;message&quot;: &quot;内容仅供参考，操作前请备份！&quot;,
+    &quot;copyright&quot;: &quot;Copyright © 2024-2025 By Jeremy.Peng&quot;
+  }
+}</pre><h3 id="page-data" tabindex="-1">Page Data <a class="header-anchor" href="#page-data" aria-label="Permalink to &quot;Page Data&quot;">​</a></h3><pre>{
+  &quot;title&quot;: &quot;Runtime API Examples&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;frontmatter&quot;: {
+    &quot;outline&quot;: &quot;deep&quot;
+  },
+  &quot;headers&quot;: [],
+  &quot;relativePath&quot;: &quot;help/index.md&quot;,
+  &quot;filePath&quot;: &quot;help/index.md&quot;,
+  &quot;lastUpdated&quot;: 1760685035000
+}</pre><h3 id="page-frontmatter" tabindex="-1">Page Frontmatter <a class="header-anchor" href="#page-frontmatter" aria-label="Permalink to &quot;Page Frontmatter&quot;">​</a></h3><pre>{
+  &quot;outline&quot;: &quot;deep&quot;
+}</pre><h2 id="more" tabindex="-1">More <a class="header-anchor" href="#more" aria-label="Permalink to &quot;More&quot;">​</a></h2><p>Check out the documentation for the <a href="https://vitepress.dev/reference/runtime-api#usedata" target="_blank" rel="noreferrer">full list of runtime APIs</a>.</p></div></div></main><footer class="VPDocFooter" data-v-a832f546 data-v-2bf0626b><!--[--><!--]--><div class="edit-info" data-v-2bf0626b><!----><div class="last-updated" data-v-2bf0626b><p class="VPLastUpdated" data-v-2bf0626b data-v-ce74c8e8>最后更新: <time datetime="2025-10-17T07:10:35.000Z" data-v-ce74c8e8></time></p></div></div><nav class="prev-next" aria-labelledby="doc-footer-aria-label" data-v-2bf0626b><span class="visually-hidden" id="doc-footer-aria-label" data-v-2bf0626b>Pager</span><div class="pager" data-v-2bf0626b><!----></div><div class="pager" data-v-2bf0626b><a class="VPLink link pager-link next" href="/help/docs.html" data-v-2bf0626b><!--[--><span class="desc" data-v-2bf0626b>下一页</span><span class="title" data-v-2bf0626b>运维帮助2</span><!--]--></a></div></nav></footer><!--[--><!--]--></div></div></div><!--[--><!--]--></div></div><footer class="VPFooter has-sidebar" data-v-a5f1d9e5 data-v-5a64d575><div class="container" data-v-5a64d575><p class="message" data-v-5a64d575>内容仅供参考，操作前请备份！</p><p class="copyright" data-v-5a64d575>Copyright © 2024-2025 By Jeremy.Peng</p></div></footer><!--[--><!--]--></div></div>
+    <script>window.__VP_HASH_MAP__=JSON.parse("{\"docs_index.md\":\"RPfRjhYS\",\"docs_kylin_kylin-activation.md\":\"BghvC1aJ\",\"docs_linux.md\":\"BHgw8aoi\",\"docs_monitoring_prometheus_basic_auth.md\":\"Btzg_c6Z\",\"help_docs.md\":\"BosYk3YQ\",\"help_index.md\":\"rb-fguHK\",\"index.md\":\"BiSkvs3u\",\"public_readme.md\":\"BsEeTmic\"}");window.__VP_SITE_DATA__=JSON.parse("{\"lang\":\"zh-CN\",\"dir\":\"ltr\",\"title\":\"Ailife's Wiki\",\"description\":\"Ailife 的 Wiki 站点，记录运维工作中零散的知识点与实践经验。\",\"base\":\"/\",\"head\":[],\"router\":{\"prefetchLinks\":true},\"appearance\":true,\"themeConfig\":{\"head\":[[\"link\",{\"rel\":\"icon\",\"href\":\"/favicon.ico\"}]],\"logo\":\"/logo.png\",\"search\":{\"provider\":\"local\"},\"outline\":{\"level\":[2,4],\"label\":\"页面导航\"},\"lastUpdated\":{\"text\":\"最后更新\",\"formatOptions\":{\"dateStyle\":\"short\",\"timeStyle\":\"short\"}},\"docFooter\":{\"prev\":\"上一页\",\"next\":\"下一页\"},\"langMenuLabel\":\"多语言\",\"returnToTopLabel\":\"回到顶部\",\"sidebarMenuLabel\":\"菜单\",\"darkModeSwitchLabel\":\"主题\",\"lightModeSwitchTitle\":\"切换到浅色模式\",\"darkModeSwitchTitle\":\"切换到深色模式\",\"outlineTitle\":\"目录\",\"nav\":[{\"text\":\"运维指南\",\"link\":\"/docs/\"},{\"text\":\"帮助中心\",\"link\":\"/help/\"},{\"text\":\"友情链接\",\"items\":[{\"text\":\"网址导航\",\"link\":\"https://nav.aisk.cc/\"},{\"text\":\"攀岩之鹿\",\"link\":\"https://aisk.cc/\"},{\"text\":\"XC知识库\",\"link\":\"https://gxxc.wiki/\"},{\"text\":\"Jeremy Blog\",\"link\":\"https://www.cnblogs.com/aistack/\"}]}],\"sidebar\":{\"/docs/\":[{\"text\":\"运维手册\",\"collapsed\":false,\"items\":[{\"text\":\"运维指南\",\"link\":\"/docs/\"},{\"text\":\"基础篇2\",\"link\":\"/docs/linux\"}]},{\"text\":\"麒麟系统\",\"collapsed\":true,\"items\":[{\"text\":\"麒麟系统激活\",\"link\":\"/docs/kylin/kylin-activation\"}]},{\"text\":\"一体化监测\",\"collapsed\":true,\"items\":[{\"text\":\"Prom基本授权\",\"link\":\"docs/monitoring/Prometheus_basic_auth\"}]}],\"/help/\":[{\"text\":\"帮助中心\",\"collapsed\":false,\"items\":[{\"text\":\"运维帮助\",\"link\":\"/help/\"},{\"text\":\"运维帮助2\",\"link\":\"/help/docs\"}]}]},\"socialLinks\":[{\"icon\":\"github\",\"link\":\"https://github.com/Stack-Baize\"}],\"footer\":{\"message\":\"内容仅供参考，操作前请备份！\",\"copyright\":\"Copyright © 2024-2025 By Jeremy.Peng\"}},\"locales\":{},\"scrollOffset\":134,\"cleanUrls\":false}");</script>
+    
+  </body>
+</html>
